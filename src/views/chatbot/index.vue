@@ -2,6 +2,7 @@
 import { set } from 'nprogress'
 import ChatItem from './ChatItem.vue'
 import SafeArea from '@/components/SafeArea.vue'
+import FloatButton from '@/components/FloatButton.vue'
 
 const isInit = ref(true)
 
@@ -97,5 +98,8 @@ const sand = ({ textVar }) => {
         </van-cell-group>
       </div>
     </div>
+    <FloatButton>
+      <van-icon name="service-o" size="30px" />
+    </FloatButton>
   </SafeArea>
 </template>

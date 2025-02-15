@@ -12,7 +12,7 @@
     "check:spell": "cspell src",
     "lint:es": "eslint .",
     "lint:style": "stylelint 'src/**/*.{vue,css,scss}'",
-    "lint:fix": "pnpm lint:es --fix && pnpm lint:style --fix",
+    "lint:fix": "pnpm lint:es --fix && pnpm lint:style --fix"
   },
   "lint-staged": {
     "*.{js,json,vue}": "eslint --fix",
@@ -21,6 +21,7 @@
   "dependencies": {
     "@iconify-json/logos": "^1.2.4",
     "@vant/area-data": "^2.0.0",
+    "@vueuse/core": "^12.6.1",
     "axios": "^1.7.9",
     "nprogress": "^0.2.0",
     "pinia": "^3.0.1",
