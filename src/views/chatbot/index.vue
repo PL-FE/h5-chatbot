@@ -1,8 +1,7 @@
 <script setup>
-import { set } from 'nprogress'
+import { useWindowSize } from '@vueuse/core'
 import ChatItem from './ChatItem.vue'
 import SafeArea from '@/components/SafeArea.vue'
-import FloatButton from '@/components/FloatButton.vue'
 
 const isInit = ref(true)
 
@@ -34,7 +33,10 @@ const msgsPrompt = [
 
 const text = ref('')
 const loading = ref(false)
-const sand = ({ textVar }) => {
+const send = ({ textVar }) => {
+  if (loading.value) {
+    return
+  }
   loading.value = true
   msgs.value.push({
     text: textVar || text.value,
@@ -47,36 +49,47 @@ const sand = ({ textVar }) => {
     loading.value = false
     isInit.value = false
     msgs.value.push({
-      text: '机器人回复',
+      text: `${new Date().toString()}<br />` + `机器人回复`,
       isSend: false,
       time: new Date().getTime(),
     })
-  }, 2000)
+  }, 1000)
 }
+const linkService = () => {
+  const weixinId = 'Zoey25877'
+  window.location.href = `weixin://contacts/profile/${weixinId}`
+}
+
+const { width, height } = useWindowSize()
+
+const offset = ref({ x: -1, y: -1 })
+onMounted(() => {
+  offset.value = { x: -1, y: height.value - 150 }
+})
 </script>
 
 <template>
   <SafeArea>
     <div class="flex size-full flex-col">
-      <div class="my-2 text-center text-xl">
+      <div class="my-2 flex items-center justify-center gap-2 text-xl">
         <b>AI客服</b>
       </div>
-      <div class="flex flex-1 flex-col bg-[#f2f1f2] py-3 overflow-hidden">
-        <div class="flex-1 overflow-auto relative">
-          <div class="flex flex-col gap-3 h-full px-3">
+      <div class="flex flex-1 flex-col overflow-hidden bg-[#f2f1f2] py-3">
+        <div class="relative flex-1 overflow-auto">
+          <div class="flex h-full flex-col gap-4 px-3">
             <ChatItem v-for="(msg, index) in msgs" :key="index" :msg="msg" />
           </div>
 
           <div
             v-if="isInit"
-            class="absolute bottom-3 w-full flex flex-col gap-3 px-4"
+            class="absolute bottom-3 flex w-full flex-col gap-3 px-4"
           >
             <ChatItem
-              class="text-sm"
               v-for="msg in msgsPrompt"
               :key="msg.text"
+              class="text-sm"
               :msg="msg"
-              @click="sand({ textVar: msg.text })"
+              @click="send({ textVar: msg.text })"
             />
           </div>
         </div>
@@ -89,17 +102,22 @@ const sand = ({ textVar }) => {
                 :loading="loading"
                 type="primary"
                 size="small"
-                @click="sand"
+                @click="send"
               >
                 发送
               </van-button>
+              <!-- <van-icon name="upgrade" size="30" @click="send" /> -->
             </div>
           </div>
         </van-cell-group>
       </div>
     </div>
-    <FloatButton>
-      <van-icon name="service-o" size="30px" />
-    </FloatButton>
+    <van-floating-bubble
+      :offset="offset"
+      axis="xy"
+      icon="chat"
+      magnetic="x"
+      @click="linkService"
+    />
   </SafeArea>
 </template>

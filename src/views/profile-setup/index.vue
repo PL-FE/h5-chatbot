@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { useCascaderAreaData } from '@vant/area-data'
 import { useRouter } from 'vue-router'
+import { showFailToast, showSuccessToast, showToast } from 'vant'
 import SafeArea from '@/components/SafeArea.vue'
 
 const router = useRouter()
@@ -68,6 +69,50 @@ const onFinish2 = ({ selectedOptions }) => {
 
 const mobile = ref('')
 const smsCode = ref('')
+const sendingCode = ref(false)
+const countdown = ref(60)
+
+const sendSmsCode = async () => {
+  if (sendingCode.value) return
+  if (!mobile.value) {
+    showToast('请输入手机号')
+    return
+  }
+
+  try {
+    sendingCode.value = true
+    // const response = await axios.post('/api/send-sms-code', { mobile: mobile.value })
+    const response = await new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve({
+          data: {
+            success: true,
+          },
+        })
+      }, 1000)
+    })
+    if (response.data.success) {
+      showToast('验证码已发送')
+      startCountdown()
+    } else {
+      showToast('验证码发送失败')
+    }
+  } catch (error) {
+    showToast('验证码发送失败')
+  }
+}
+
+const startCountdown = () => {
+  let timer = setInterval(() => {
+    countdown.value--
+    if (countdown.value <= 0) {
+      clearInterval(timer)
+      countdown.value = 60
+      timer = null
+      sendingCode.value = false
+    }
+  }, 1000)
+}
 
 const onSubmit = () => {
   router.push('/chatbot')
@@ -76,7 +121,7 @@ const onSubmit = () => {
 
 <template>
   <SafeArea>
-    <div class="flex size-full flex-col px-5 py-6">
+    <div class="flex size-full flex-col overflow-auto px-5 py-6">
       <div class="mb-2 text-center text-xl">
         <b>🚀 您已获得【AI智能方案定制权益】</b>
       </div>
@@ -84,7 +129,7 @@ const onSubmit = () => {
         <span>完善以下信息，将为您提供匹配的咨询方案</span>
       </div>
 
-      <div class="flex flex-1 flex-col justify-between pt-10 overflow-auto">
+      <div class="flex flex-1 flex-col justify-between pt-10">
         <van-form label-align="top" @submit="onSubmit">
           <van-field
             v-model="fieldLabel"
@@ -172,7 +217,9 @@ const onSubmit = () => {
             placeholder="请输入短信验证码"
           >
             <template #button>
-              <van-button size="small" type="primary">发送验证码</van-button>
+              <van-button size="small" type="primary" @click="sendSmsCode">
+                {{ sendingCode ? `${countdown}s` : '发送验证码' }}
+              </van-button>
             </template>
           </van-field>
         </van-form>

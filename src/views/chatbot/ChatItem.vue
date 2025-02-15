@@ -4,14 +4,14 @@
     class="inline-flex"
   >
     <span
-      class="px-3 py-1 rounded-md"
+      class="rounded-md px-3 py-1"
       :style="{
-        backgroundColor: msg.isSend ? '#58be6a' : '#fff',
+        backgroundColor: msg.isSend ? '#4187f2' : '#fff',
         color: msg.isSend ? '#fff' : '#000',
       }"
-    >
-      {{ msg.text }}
-    </span>
+      @click="emits('click', msg)"
+      v-html="msg.text"
+    />
   </div>
 </template>
 
@@ -22,4 +22,6 @@ const props = defineProps({
     default: () => ({}),
   },
 })
+
+const emits = defineEmits(['click'])
 </script>

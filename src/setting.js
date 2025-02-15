@@ -1,6 +1,6 @@
 export default {
   // 系统名称
-  systemName: 'Vue H5 Template',
+  systemName: '学选网',
 
   // 公司信息
   company: {
