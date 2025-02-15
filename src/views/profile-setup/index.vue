@@ -66,6 +66,9 @@ const onFinish2 = ({ selectedOptions }) => {
   fieldLabel2.value = selectedOptions.map((option) => option.text).join('/')
 }
 
+const mobile = ref('')
+const smsCode = ref('')
+
 const onSubmit = () => {
   router.push('/chatbot')
 }
@@ -83,97 +86,95 @@ const onSubmit = () => {
 
       <div class="flex flex-1 flex-col justify-between pt-10 overflow-auto">
         <van-form label-align="top" @submit="onSubmit">
-          <van-cell-group inset>
-            <van-field
-              v-model="fieldLabel"
-              is-link
-              readonly
-              label="出生年份"
-              placeholder="请选择出生年份"
-              @click="showPicker = true"
+          <van-field
+            v-model="fieldLabel"
+            is-link
+            readonly
+            label="出生年份"
+            placeholder="请选择出生年份"
+            @click="showPicker = true"
+          />
+          <van-popup
+            v-model:show="showPicker"
+            destroy-on-close
+            round
+            position="bottom"
+          >
+            <van-date-picker
+              v-model="fieldValue"
+              title="选择日期"
+              :min-date="new Date(1980, 0, 1)"
+              :max-date="new Date()"
+              @confirm="onFinish"
+              @cancel="showPicker = false"
             />
-            <van-popup
-              v-model:show="showPicker"
-              destroy-on-close
-              round
-              position="bottom"
-            >
-              <van-date-picker
-                v-model="fieldValue"
-                title="选择日期"
-                :min-date="new Date(1980, 0, 1)"
-                :max-date="new Date()"
-                @confirm="onFinish"
-                @cancel="showPicker = false"
-              />
-            </van-popup>
+          </van-popup>
 
-            <van-field
-              v-model="fieldLabel1"
-              is-link
-              readonly
-              label="年级"
-              placeholder="请选择孩子当前就读年级"
-              @click="showPicker1 = true"
+          <van-field
+            v-model="fieldLabel1"
+            is-link
+            readonly
+            label="年级"
+            placeholder="请选择孩子当前就读年级"
+            @click="showPicker1 = true"
+          />
+          <van-popup
+            v-model:show="showPicker1"
+            destroy-on-close
+            round
+            position="bottom"
+          >
+            <van-cascader
+              v-model="fieldValue1"
+              title="请选择孩子当前就读年级"
+              :options="options1"
+              @close="showPicker1 = false"
+              @finish="onFinish1"
             />
-            <van-popup
-              v-model:show="showPicker1"
-              destroy-on-close
-              round
-              position="bottom"
-            >
-              <van-cascader
-                v-model="fieldValue1"
-                title="请选择孩子当前就读年级"
-                :options="options1"
-                @close="showPicker1 = false"
-                @finish="onFinish1"
-              />
-            </van-popup>
+          </van-popup>
 
-            <van-field
-              v-model="fieldLabel2"
-              is-link
-              readonly
-              label="省份"
-              placeholder="请选择省份信息"
-              @click="showPicker2 = true"
+          <van-field
+            v-model="fieldLabel2"
+            is-link
+            readonly
+            label="省份"
+            placeholder="请选择省份信息"
+            @click="showPicker2 = true"
+          />
+          <van-popup
+            v-model:show="showPicker2"
+            destroy-on-close
+            round
+            position="bottom"
+          >
+            <van-cascader
+              v-model="fieldValue2"
+              title="请选择所在地区"
+              :options="options2"
+              @close="showPicker2 = false"
+              @finish="onFinish2"
             />
-            <van-popup
-              v-model:show="showPicker2"
-              destroy-on-close
-              round
-              position="bottom"
-            >
-              <van-cascader
-                v-model="fieldValue2"
-                title="请选择所在地区"
-                :options="options2"
-                @close="showPicker2 = false"
-                @finish="onFinish2"
-              />
-            </van-popup>
+          </van-popup>
 
-            <van-field
-              v-model="tel"
-              type="tel"
-              label="手机号"
-              placeholder="请输入手机号"
-            />
+          <van-field
+            v-model="mobile"
+            type="tel"
+            label="手机号"
+            placeholder="请输入手机号"
+          />
 
-            <van-field
-              v-model="sms"
-              center
-              clearable
-              label="短信验证码"
-              type="digit"
-              placeholder="请输入短信验证码"
-            >
-              <template #button>
-                <van-button size="small" type="primary">发送验证码</van-button>
-              </template>
-            </van-field>
-          </van-cell-group>
+          <van-field
+            v-model="smsCode"
+            center
+            clearable
+            label="短信验证码"
+            type="digit"
+            placeholder="请输入短信验证码"
+          >
+            <template #button>
+              <van-button size="small" type="primary">发送验证码</van-button>
+            </template>
+          </van-field>
         </van-form>
 
         <van-button

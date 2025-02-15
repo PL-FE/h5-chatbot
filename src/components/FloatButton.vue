@@ -3,9 +3,9 @@
     ref="floatButton"
     class="floating-button"
     :style="{
-      top: position.top + 'px',
+      bottom: position.bottom + 'px',
       left: position.left + 'px',
-      transition: isDragging ? 'none' : 'left 0.3s ease, top 0.3s ease',
+      transition: isDragging ? 'none' : 'left 0.3s ease, bottom 0.3s ease',
     }"
     @mousedown="startDrag"
     @touchstart="startDrag"
@@ -21,7 +21,7 @@ import { Icon as VanIcon } from 'vant'
 
 const { width, height } = useWindowSize()
 const floatButton = ref(null)
-const position = ref({ top: 100, left: 20 })
+const position = ref({ bottom: 100, left: 20 })
 const isDragging = ref(false)
 
 const startDrag = (event) => {
@@ -30,7 +30,7 @@ const startDrag = (event) => {
   const startX = event.clientX || event.touches[0].clientX
   const startY = event.clientY || event.touches[0].clientY
   const initialLeft = position.value.left
-  const initialTop = position.value.top
+  const initialbottom = position.value.bottom
 
   const onMove = (moveEvent) => {
     if (!isDragging.value) return
@@ -41,8 +41,8 @@ const startDrag = (event) => {
       Math.max(initialLeft + clientX - startX, 0),
       width.value - 50
     )
-    position.value.top = Math.min(
-      Math.max(initialTop + clientY - startY, 0),
+    position.value.bottom = Math.min(
+      Math.max(initialbottom + clientY - startY, 0),
       height.value - 50
     )
   }
@@ -82,6 +82,6 @@ onMounted(() => {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   cursor: grab;
   user-select: none;
-  transition: left 0.3s ease, top 0.3s ease;
+  transition: left 0.3s ease, bottom 0.3s ease;
 }
 </style>
