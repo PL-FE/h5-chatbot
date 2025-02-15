@@ -1,0 +1,5 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`setPageTitle > has custom title 1`] = `"title - Vue H5 Template"`;
+
+exports[`setPageTitle > should be Vue H5 Template 1`] = `"Vue H5 Template"`;

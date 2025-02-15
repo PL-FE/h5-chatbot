@@ -1,0 +1,17 @@
+{
+  "words": [
+    "nprogress",
+    "pinia",
+    "tabbar",
+    "tailwindcss",
+    "unplugin",
+    "Vant",
+    "Leedom"
+  ],
+  "ignorePaths": [
+    "src/**/*.svg",
+    "node_modules/**/*",
+    "dist/**/*",
+    "public/**/*"
+  ]
+}
