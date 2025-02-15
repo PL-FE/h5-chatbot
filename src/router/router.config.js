@@ -4,7 +4,7 @@ export const constantRoutes = [
   {
     path: '/',
     component: Layout,
-    redirect: '/home',
+    redirect: '/profile-setup',
     meta: { title: '首页', keepAlive: true },
     children: [
       {
@@ -26,6 +26,18 @@ export const constantRoutes = [
     name: 'VueView',
     component: () => import('@/views/vue/index.vue'),
     meta: { title: 'Vue', icon: '' },
+  },
+  {
+    path: '/profile-setup',
+    name: 'profileSetup',
+    component: () => import('@/views/profile-setup/index.vue'),
+    meta: { title: '资料填写', icon: '' },
+  },
+  {
+    path: '/chatbot',
+    name: 'chatbot',
+    component: () => import('@/views/chatbot/index.vue'),
+    meta: { title: '资料填写', icon: '' },
   },
   {
     path: '/:pathMatch(.*)*',

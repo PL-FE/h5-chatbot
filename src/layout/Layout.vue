@@ -13,5 +13,5 @@ const routeList = computed(() => constantRoutes[0].children.filter(v => v.meta.s
   </router-view>
 
   <router-view v-else :key="route.path" />
-  <TabBar v-if="route.meta.tabShow" :routes="routeList" />
+  <!-- <TabBar v-if="route.meta.tabShow" :routes="routeList" /> -->
 </template>

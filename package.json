@@ -5,7 +5,7 @@
   "private": true,
   "packageManager": "pnpm@9.15.4",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest",
@@ -13,7 +13,6 @@
     "lint:es": "eslint .",
     "lint:style": "stylelint 'src/**/*.{vue,css,scss}'",
     "lint:fix": "pnpm lint:es --fix && pnpm lint:style --fix",
-    "prepare": "husky"
   },
   "lint-staged": {
     "*.{js,json,vue}": "eslint --fix",
@@ -21,6 +20,7 @@
   },
   "dependencies": {
     "@iconify-json/logos": "^1.2.4",
+    "@vant/area-data": "^2.0.0",
     "axios": "^1.7.9",
     "nprogress": "^0.2.0",
     "pinia": "^3.0.1",
